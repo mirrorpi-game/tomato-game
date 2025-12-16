@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토마토 숫자 게임</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #000;
+        font-family: Arial, sans-serif;
+        width: 100vw;
+        height: 100vh;
+        overflow: auto;
+      }
+      canvas {
+        display: block;
+        cursor: crosshair;
+        border: 2px solid #333;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      }
+      
+      .how-to-play {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        width: 160px;
+        background: rgba(0, 0, 0, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        padding: 10px;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+        line-height: 1.3;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+      }
+      
+      .toggle-header {
+        margin: 0 0 8px 0;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 4px;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: color 0.2s ease;
+      }
+      
+      .toggle-header:hover {
+        color: #ffd700;
+      }
+      
+      .toggle-icon {
+        font-size: 10px;
+        transition: transform 0.3s ease;
+      }
+      
+      .rule-content {
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+        overflow: hidden;
+        max-height: 200px;
+        opacity: 1;
+      }
+      
+      .rule-content.collapsed {
+        max-height: 0;
+        opacity: 0;
+      }
+      
+      .rule-section {
+        margin-bottom: 8px;
+      }
+      
+      .rule-section:last-child {
+        margin-bottom: 0;
+      }
+      
+      .rule-section p {
+        margin: 0;
+        line-height: 1.4;
+      }
+      
+      .rule-section strong {
+        color: #ffd700;
+        display: block;
+        margin-bottom: 2px;
+        font-size: 9px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="gameCanvas"></canvas>
+    
+    <!-- How to Play 박스 -->
+    <div id="howToPlay" class="how-to-play">
+      <h3 id="howToPlayToggle" class="toggle-header">🎮 How to Play <span class="toggle-icon">▶</span></h3>
+      <div id="howToPlayContent" class="rule-content collapsed">
+        <div class="rule-section">
+          <p><strong>🎯 목표</strong>합=10 만들기</p>
+        </div>
+        <div class="rule-section">
+          <p><strong>🍅 방법</strong>클릭→드래그→발사</p>
+        </div>
+        <div class="rule-section">
+          <p><strong>✅ 성공</strong>+2점 | +2샷</p>
+        </div>
+        <div class="rule-section">
+          <p><strong>❌ 실패</strong>-2샷 | 사과추가</p>
+        </div>
+        <div class="rule-section">
+          <p><strong>⏰ 시간</strong>60초</p>
+        </div>
+      </div>
+    </div>
+    
+    <script type="module" src="/src/main.ts"></script>
+    
+    <script>
+      // How to Play 토글 기능
+      document.addEventListener('DOMContentLoaded', function() {
+        const toggleHeader = document.getElementById('howToPlayToggle');
+        const content = document.getElementById('howToPlayContent');
+        const toggleIcon = toggleHeader.querySelector('.toggle-icon');
+        
+        // 초기 상태를 닫힌 상태로 설정
+        toggleIcon.style.transform = 'rotate(-90deg)';
+        
+        toggleHeader.addEventListener('click', function() {
+          const isCollapsed = content.classList.contains('collapsed');
+          
+          if (isCollapsed) {
+            // 펼치기
+            content.classList.remove('collapsed');
+            toggleIcon.textContent = '▼';
+            toggleIcon.style.transform = 'rotate(0deg)';
+          } else {
+            // 접기
+            content.classList.add('collapsed');
+            toggleIcon.textContent = '▶';
+            toggleIcon.style.transform = 'rotate(-90deg)';
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
