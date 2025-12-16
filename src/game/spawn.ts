@@ -1,5 +1,5 @@
 import { Tomato } from './Tomato.js';
-import { findNonOverlappingPosition, distance } from './physics.js';
+import { distance } from './physics.js';
 
 // 게임 설정
 export interface GameConfig {
